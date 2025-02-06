@@ -1,5 +1,6 @@
 {
   "name": "backend",
+  "type": "module",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -14,6 +15,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@huggingface/inference": "^2.8.1",
+    "@langchain/community": "^0.3.28",
+    "@xenova/transformers": "^2.17.2",
+    "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -24,7 +29,9 @@
     "globals": "^15.3.0",
     "http-status": "^1.7.4",
     "jsonwebtoken": "^9.0.2",
+    "langchain": "^0.3.15",
     "mongoose": "^8.4.0",
+    "pdf-parse": "^1.1.1",
     "typescript-eslint": "^7.10.0",
     "validator": "^13.12.0",
     "zod": "^3.23.8"

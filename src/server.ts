@@ -1,6 +1,6 @@
 import app from "./app";
 import mongoose from "mongoose";
-import configaration from "./app/configaration";
+import configaration from "./app/configaration/index";
 import { Server } from 'http';
 
 let server: Server;

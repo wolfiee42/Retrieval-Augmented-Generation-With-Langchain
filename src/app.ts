@@ -1,7 +1,7 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import globalErrorHandler from './app/middlewares/globalErrorHandler';
 import notFound from './app/middlewares/notFound';
-import router from './app/routes';
+import router from './app/routes/index';
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 
@@ -26,3 +26,4 @@ app.use(globalErrorHandler)
 app.use(notFound)
 
 export default app;
+
