@@ -1,18 +1,17 @@
-export async function takeNotes(
+import { formatDocumentsAsString } from "langchain/util/document";
+import { addPaper, convertPdfToDocuments, generateNotes, loadPdfFromUrl } from "./pdf.helper";
+import { Pdf } from "./pdf.model";
+
+async function takeNotes(
     paperUrl: string,
     name: string,
-    pagesToDelete?: number[]
 ): Promise<ArxivPaperNote[]> {
-    const database = await SupabaseDatabase.fromExistingIndex();
-    const existingPaper = await database.getPaper(paperUrl);
+    const existingPaper = await Pdf.findOne({ url: paperUrl });
     if (existingPaper) {
         return existingPaper.notes as Array<ArxivPaperNote>;
     }
 
-    let pdfAsBuffer = await loadPdfFromUrl(paperUrl);
-    if (pagesToDelete && pagesToDelete.length > 0) {
-        pdfAsBuffer = await deletePagesFromPdf(pdfAsBuffer, pagesToDelete);
-    }
+    const pdfAsBuffer = await loadPdfFromUrl(paperUrl);
     const documents = await convertPdfToDocuments(pdfAsBuffer);
     const notes = await generateNotes(documents);
     const newDocs: Array<Document> = documents.map((doc) => ({
@@ -23,7 +22,7 @@ export async function takeNotes(
         },
     }));
     await Promise.all([
-        database.addPaper({
+        addPaper({
             paper: formatDocumentsAsString(newDocs),
             url: paperUrl,
             notes,
@@ -33,3 +32,7 @@ export async function takeNotes(
     ]);
     return notes;
 }
+
+export const pdfService = {
+    takeNotes,
+};
